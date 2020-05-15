@@ -6,11 +6,12 @@ namespace Workers
 {
     class Person
     {
+        string Password;
         public string name { get; set; }
         public string login { get; set; }
         public string password
         {
-            set { password = value; }
+            set { Password = value; }
         }
     }
 }
