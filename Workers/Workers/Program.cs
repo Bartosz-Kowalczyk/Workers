@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using MyGenerators;
 
 namespace Workers
 {
@@ -9,8 +11,14 @@ namespace Workers
         {
             List<Worker> myWorkers = new List<Worker>();
             string newName, newDepartment, newLogin, newPassword = "";
+            int passSize = 8;
 
-            AddNewWorker(); 
+            myWorkers.Add(new Worker() { name = "Kowalski", department = "Księgowość", login = "kow1265", password = "kdfh74t7" });
+            myWorkers.Add(new Worker() { name = "Nowak", department = "Handel", login = "now467", password = "vhhyyt45" });
+            myWorkers.Add(new Worker() { name = "Piątkowski", department = "IT", login = "pia286", password = "sdfgr546" });
+            myWorkers.Add(new Worker() { name = "Kociemba", department = "Marketing", login = "koc909", password = "sdfrtb45" });
+            myWorkers.Add(new Worker() { name = "Małysz", department = "HR", login = "mal334", password = "sjkduy56" });
+            myWorkers.Add(new Worker() { name = "Zarzycki", department = "IT", login = "zar846", password = "sdfhjk345" });
 
             void AddNewWorker()
             {
@@ -38,13 +46,34 @@ namespace Workers
                 }
             }
 
-            myWorkers.Add(new Worker() { name = "Kowalski" , department = "Księgowość" , login = "kow1265", password = "kdfh74t7" });
-            myWorkers.Add(new Worker() { name = "Nowak", department = "Handel", login = "now467", password = "vhhyyt45" });
+            void ShowWorkers()
+            {
+                myWorkers = myWorkers.OrderBy(p => p.name).ToList();
+                myWorkers.ForEach(p => Console.WriteLine(p.name));
+            }
 
-            foreach (Worker w in myWorkers)
-                Console.WriteLine(w.name + " / " + w.department + " / " + w.login);
+            void SetNewPass()
+            {
+                myWorkers.ForEach(p => p.password = NewPasswords.GeneratePassword(true, true, true, false, passSize));
+            }
 
-            Console.Read(); 
+            void SelectWorkers()
+            {
+                var wrks = from w in myWorkers
+                           where w.department == "IT"
+                           || w.department == "HR"
+                           select w;
+            }
+
+            ShowWorkers();
+            SetNewPass();
+            SelectWorkers(); 
+
+            Console.Read();
+
+       
+
+
         }
     }
 }

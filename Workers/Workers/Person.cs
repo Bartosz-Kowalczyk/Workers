@@ -13,5 +13,6 @@ namespace Workers
         {
             set { Password = value; }
         }
+
     }
 }
